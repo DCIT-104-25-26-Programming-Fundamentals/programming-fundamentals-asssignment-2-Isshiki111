@@ -42,9 +42,6 @@
 #include <iostream>
 using namespace std;
 
-#include <iostream>
-using namespace std;
-
 int n_numbers;
 
 int sum(int n[100])
