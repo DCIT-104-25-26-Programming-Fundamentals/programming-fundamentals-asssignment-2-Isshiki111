@@ -55,5 +55,62 @@
 // =============================================================================
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
+
+// PART A — Print the multiplication table for a single number
+void printSingleTable(int number) {
+    cout << "Multiplication Table for " << number << ":" << endl;
+    for (int i = 1; i <= 12; i++) {
+        cout << setw(2) << number << "  x  " << setw(2) << i << "  =  " << number * i << endl;
+    }
+}
+
+// PART B — Print multiplication tables for every number from 1 to N
+void printTablesToN(int n) {
+    if (n < 1) {
+        cout << "Error: N must be a positive integer." << endl;
+        return;
+    }
+
+    for (int num = 1; num <= n; num++) {
+        cout << "Multiplication Table for " << num << ":" << endl;
+        for (int i = 1; i <= 12; i++) {
+            cout << setw(2) << num << "  x  " << setw(2) << i << "  =  " << num * i << endl;
+        }
+        if (num != n) {
+            cout << "---------------------------" << endl;
+        }
+    }
+}
+
+int main() {
+    int choice;
+
+    cout << "=====================================" << endl;
+    cout << "    MULTIPLICATION TABLE GENERATOR" << endl;
+    cout << "=====================================" << endl;
+    cout << "1. Print a single multiplication table" << endl;
+    cout << "2. Print tables from 1 to N" << endl;
+    cout << "Enter your choice (1-2): ";
+    cin >> choice;
+
+    if (choice == 1) {
+        int number;
+        cout << "Enter a number: ";
+        cin >> number;
+        printSingleTable(number);
+    }
+    else if (choice == 2) {
+        int n;
+        cout << "Enter a number N: ";
+        cin >> n;
+        printTablesToN(n);
+    }
+    else {
+        cout << "Invalid choice." << endl;
+    }
+
+    return 0;
+}
