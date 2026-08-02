@@ -83,3 +83,139 @@
 #include <iomanip>
 using namespace std;
 
+// Define the Student struct
+struct Student {
+    string name;
+    int id;
+    vector<double> scores;
+};
+
+
+double averageScore(const Student& s) {
+    if (s.scores.empty()) {
+        return 0.0;
+    }
+
+    double total = 0.0;
+    for (size_t i = 0; i < s.scores.size(); i++) {
+        total += s.scores[i];
+    }
+    return total / s.scores.size();
+}
+
+
+void addStudent(vector<Student>& students) {
+    Student s;
+
+    cin.ignore();
+    cout << "Student name: ";
+    getline(cin, s.name);
+
+    cout << "Student ID: ";
+    cin >> s.id;
+
+    int numScores;
+    cout << "How many scores? ";
+    cin >> numScores;
+
+    for (int i = 0; i < numScores; i++) {
+        double score;
+        cout << "Enter score " << i + 1 << ": ";
+        cin >> score;
+        s.scores.push_back(score);
+    }
+
+    students.push_back(s);
+    cout << "Student \"" << s.name << "\" added successfully." << endl;
+}
+
+
+void displayStudents(const vector<Student>& students) {
+    if (students.empty()) {
+        cout << "No students have been added yet." << endl;
+        return;
+    }
+
+    cout << fixed << setprecision(2);
+    cout << left << setw(20) << "Name"
+         << setw(12) << "ID"
+         << setw(20) << "Scores"
+         << "Average" << endl;
+    cout << "--------------------------------------------------------------" << endl;
+
+    for (size_t i = 0; i < students.size(); i++) {
+        cout << left << setw(20) << students[i].name
+             << setw(12) << students[i].id;
+
+        string scoresStr = "";
+        for (size_t j = 0; j < students[i].scores.size(); j++) {
+            scoresStr += to_string(static_cast<int>(students[i].scores[j]));
+            if (j < students[i].scores.size() - 1) {
+                scoresStr += ", ";
+            }
+        }
+
+        cout << setw(20) << scoresStr
+             << averageScore(students[i]) << endl;
+    }
+}
+
+
+void calculateAverage(const vector<Student>& students) {
+    int id;
+    cout << "Enter student ID: ";
+    cin >> id;
+
+    for (size_t i = 0; i < students.size(); i++) {
+        if (students[i].id == id) {
+            cout << fixed << setprecision(2);
+            cout << students[i].name << "'s average score: "
+                 << averageScore(students[i]) << endl;
+            return;
+        }
+    }
+
+    cout << "Error: Student with ID " << id << " not found." << endl;
+}
+
+void displayMenu() {
+    cout << "================================" << endl;
+    cout << "   STUDENT RECORD SYSTEM MENU" << endl;
+    cout << "================================" << endl;
+    cout << "1. Add student" << endl;
+    cout << "2. Display all students" << endl;
+    cout << "3. Calculate average score" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+
+int main() {
+    vector<Student> students;
+    int choice;
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+
+        if (choice == 1) {
+            addStudent(students);
+        }
+        else if (choice == 2) {
+            displayStudents(students);
+        }
+        else if (choice == 3) {
+            calculateAverage(students);
+        }
+        else if (choice == 4) {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+        else {
+            cout << "Error: Invalid choice. Please enter a number from 1 to 4." << endl;
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
